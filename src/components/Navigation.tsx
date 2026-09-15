@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { weddingData } from "@/data/wedding";
 import { useTheme } from "@/lib/ThemeContext";
@@ -22,16 +22,22 @@ export default function Navigation() {
   const { theme } = useTheme();
 
   const [showRSVP, setShowRSVP] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 60);
-      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 400;
-      const scrollDown = window.scrollY > (lastScrollY || 0);
-      lastScrollY = window.scrollY;
-      setShowRSVP(!nearBottom && !scrollDown && window.scrollY > 300);
+      const currentY = window.scrollY;
+      setScrolled(currentY > 60);
+
+      const nearBottom = window.innerHeight + currentY >= document.body.offsetHeight - 400;
+      const scrollingUp = currentY < lastScrollY.current;
+      lastScrollY.current = currentY;
+
+      // Show when scrolling up and past hero, hide near bottom
+      setShowRSVP(!nearBottom && scrollingUp && currentY > 400);
     };
-    let lastScrollY = 0;
+
+    lastScrollY.current = window.scrollY;
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -90,7 +96,7 @@ export default function Navigation() {
         }}
       >
         <button onClick={() => setOpen(true)} className="p-1" aria-label="Open menu">
-          <svg className="w-5 h-5 text-mint dark:text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <svg className="w-7 h-7 text-mint dark:text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5M3.75 15h16.5" />
           </svg>
         </button>
@@ -98,21 +104,26 @@ export default function Navigation() {
         <div className="w-7" />
       </motion.div>
 
-      {/* Mobile sticky RSVP button */}
-      {showRSVP && (
-        <div className="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-40">
-          <motion.button
+      {/* Mobile sticky RSVP button — persists when visible, no fade on stop */}
+      <AnimatePresence>
+        {showRSVP && (
+          <motion.div
+            key="rsvp-btn"
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
-            transition={{ delay: 0.2, duration: 0.4 }}
-            onClick={() => nav("#rsvp")}
-            className="h-10 px-5 bg-mint text-cream text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.18em] font-sans font-medium border border-lavender/30 rounded-[3px] shadow-lg shadow-mint/20 transition-all duration-400 hover:bg-mint-dark"
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            className="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-40"
           >
-            RSVP
-          </motion.button>
-        </div>
-      )}
+            <button
+              onClick={() => nav("#rsvp")}
+              className="h-11 px-6 bg-mint text-cream text-[0.75rem] uppercase tracking-[0.18em] font-sans font-medium border border-lavender/30 rounded-[3px] shadow-lg shadow-mint/20 hover:bg-mint-dark active:scale-[0.98]"
+            >
+              RSVP
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile menu overlay */}
       <AnimatePresence>
@@ -136,7 +147,7 @@ export default function Navigation() {
               <div className="flex items-center justify-between px-5 py-4 border-b border-sage/30 dark:border-lavender/20">
                 <span className="text-[1rem] font-script text-mint dark:text-cream">{weddingData.monogram.first}&amp;{weddingData.monogram.second}</span>
                 <button onClick={() => setOpen(false)} className="p-1" aria-label="Close menu">
-                  <svg className="w-5 h-5 text-mint dark:text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <svg className="w-6 h-6 text-mint dark:text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>

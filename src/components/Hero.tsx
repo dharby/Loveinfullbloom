@@ -21,12 +21,19 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
 
+  // Background parallax (shared)
   const bgY1 = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const bgY2 = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const bgY3 = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, 50]);
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  // Desktop parallax
+  const desktopTextY = useTransform(scrollYProgress, [0, 1], [0, 30]);
+  const desktopPhotoY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const desktopOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+  // Mobile parallax - much gentler so content stays visible
+  const mobileTextY = useTransform(scrollYProgress, [0, 1], [0, 10]);
+  const mobileOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id.replace("#", ""));
@@ -76,8 +83,8 @@ export default function Hero() {
         <path d="M110 30 Q130 20 150 35 Q170 50 155 80" stroke="#3A7D5C" strokeWidth="0.8"/>
       </motion.svg>
 
-      {/* Mobile: stacked layout */}
-      <motion.div style={{ y: textY, opacity }} className="relative z-10 w-full px-5 md:hidden">
+      {/* Mobile: stacked layout — gentle parallax */}
+      <motion.div style={{ y: mobileTextY, opacity: mobileOpacity }} className="relative z-10 w-full px-5 md:hidden">
         <div className="text-center">
           <motion.p custom={0} initial="hidden" animate="visible" variants={fadeUp}
             className="text-[0.75rem] uppercase tracking-[0.35em] text-lavender font-sans mb-4">
@@ -132,9 +139,9 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Desktop: side-by-side layout */}
+      {/* Desktop: side-by-side layout — full parallax */}
       <div className="relative z-10 hidden md:flex items-center justify-center w-full max-w-6xl mx-auto px-8 lg:px-12 gap-10 lg:gap-16">
-        <motion.div style={{ y: textY, opacity }} className="flex-1 text-center">
+        <motion.div style={{ y: desktopTextY, opacity: desktopOpacity }} className="flex-1 text-center">
           <motion.p custom={0} initial="hidden" animate="visible" variants={fadeUp} className="text-[0.8rem] uppercase tracking-[0.35em] text-lavender font-sans mb-4">
             Save the Date
           </motion.p>
@@ -168,7 +175,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div style={{ y: photoY }} className="flex-shrink-0">
+        <motion.div style={{ y: desktopPhotoY }} className="flex-shrink-0">
           <div className="relative">
             <div className="w-72 h-[26rem] lg:w-80 lg:h-[30rem] rounded-t-full border-[3px] border-lavender/40 overflow-hidden relative shadow-xl shadow-lavender/10">
               <img src="/og-image.jpg" alt="Oreoluwa and Daberechukwu" className="w-full h-full object-cover" />
