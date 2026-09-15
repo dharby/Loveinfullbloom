@@ -10,6 +10,7 @@ const photos = [
   { id: 4, label: "Pre-Wedding", src: "/images/IMG_7359.JPG", aspect: "aspect-[3/4]" },
   { id: 5, label: "Moments", src: "/images/IMG_7363.JPG", aspect: "aspect-[3/4]" },
   { id: 6, label: "Celebration", src: "/images/IMG_3764.JPG", aspect: "aspect-[4/3]" },
+  { id: 7, label: "Our Journey", src: "/images/IMG_9398.JPG", aspect: "aspect-[3/4]" },
 ];
 
 export default function Gallery() {

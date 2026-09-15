@@ -91,21 +91,21 @@ export const weddingData = {
   ],
   story: [
     {
-      year: "2019",
+      year: "2015",
       title: "The First Meeting",
-      description: "Our paths crossed for the first time at a mutual friend's gathering. Little did we know that this encounter would be the beginning of something beautiful.",
+      description: "Our paths crossed for the first time at church. What began as a casual encounter would grow into something beautiful over the years.",
       icon: "sparkles",
     },
     {
-      year: "2020",
-      title: "The Friendship",
-      description: "What started as casual conversations grew into a deep friendship. We discovered we shared the same values, dreams, and a love for adventure.",
+      year: "2017",
+      title: "The Beginning",
+      description: "From friendship to love — we started dating and discovered we shared the same values, dreams, and a love for adventure.",
       icon: "heart",
     },
     {
-      year: "2024",
+      year: "2025",
       title: "The Proposal",
-      description: "On a special evening under the stars, Daberechukwu asked Oreoluwa to be his forever. She said yes, and our hearts rejoiced!",
+      description: "On a special evening, Daberechukwu asked Oreoluwa to be his forever. She said yes, and our hearts rejoiced!",
       icon: "ring",
     },
     {
@@ -257,6 +257,7 @@ export const weddingData = {
       { id: 4, src: "/images/IMG_7359.JPG", alt: "Together in Paris", category: "travel" },
       { id: 5, src: "/images/IMG_7363.JPG", alt: "Beach moments", category: "prewedding" },
       { id: 6, src: "/images/IMG_3764.JPG", alt: "Family gathering", category: "family" },
+      { id: 7, src: "/images/IMG_9398.JPG", alt: "Our journey together", category: "couple" },
     ],
   },
   social: {
