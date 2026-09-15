@@ -1,0 +1,267 @@
+export const weddingData = {
+  couple: {
+    bride: {
+      firstName: "Oreoluwa",
+      lastName: "Philus-Ogun",
+      fullName: "Oreoluwa Esther Philus-Ogun",
+      parents: "Pharm (Apostle) Adewole Philus-Ogun & Pastor Mrs Omolara Akin-Ojo",
+    },
+    groom: {
+      firstName: "Daberechukwu",
+      lastName: "Ekwubiri",
+      fullName: "Daberechukwu Oladimeji Ekwubiri",
+      parents: "Mr Samson & Mrs Olajoke Ekwubiri",
+    },
+    displayName: "Oreoluwa & Daberechukwu",
+    shortDisplay: "O & D",
+    hashtag: "#LoveInFullBloom26",
+    secondaryHashtags: ["#MeetTheShugas26", "#ForeverMyChurchCrush26"],
+  },
+  wedding: {
+    date: "2026-03-20T08:00:00",
+    displayDate: "Friday, March 20th, 2026",
+    year: 2026,
+    month: "March",
+    day: "20th",
+    dayOfWeek: "Friday",
+    time: "8:00 AM",
+    tradTime: "8:00 AM",
+    churchTime: "11:00 AM",
+  },
+  colorCode: {
+    primary: "Mint Green",
+    secondary: "Lavender",
+    tertiary: "Soft Sage",
+    hex: {
+      mint: "#3A7D5C",
+      mintLight: "#5A9D7C",
+      mintDark: "#2D6A4F",
+      lavender: "#9B8CB7",
+      lavenderLight: "#C4B8D9",
+      lavenderDark: "#7B6C9A",
+      sage: "#8FB89A",
+      sageLight: "#C5D9CA",
+      cream: "#FAF8FB",
+      creamDark: "#F0ECF3",
+      ink: "#2C2C2C",
+      inkSoft: "#5A5A5A",
+      inkMuted: "#8A8A8A",
+      watercolor1: "#E8E0F0",
+      watercolor2: "#D5E8E0",
+    },
+  },
+  monogram: {
+    first: "O",
+    second: "D",
+  },
+  events: [
+    {
+      id: "traditional",
+      title: "Traditional Wedding",
+      date: "Friday, March 20th, 2026",
+      time: "8:00 AM",
+      venue: "The Charis Center",
+      address: "Etal Avenue First Bank B/Stop, off Kudirat Abiola Way, Oregun Ikeja, Lagos",
+      dressCode: "Traditional Attire - Color Code: Lavender & Mint",
+      description: "Join us as we celebrate our love in the beautiful Nigerian tradition.",
+      icon: "traditional",
+    },
+    {
+      id: "church",
+      title: "Church Wedding",
+      date: "Friday, March 20th, 2026",
+      time: "11:00 AM",
+      venue: "The Charis Center",
+      address: "Etal Avenue First Bank B/Stop, off Kudirat Abiola Way, Oregun Ikeja, Lagos",
+      dressCode: "Formal - Color Code: Lavender & Mint",
+      description: "见证我们的爱情在上帝面前永恒结合。",
+      icon: "church",
+    },
+    {
+      id: "reception",
+      title: "Reception",
+      date: "Friday, March 20th, 2026",
+      time: "Reception Follows Immediately",
+      venue: "The Charis Center",
+      address: "Etal Avenue First Bank B/Stop, off Kudirat Abiola Way, Oregun Ikeja, Lagos",
+      dressCode: "Formal - Color Code: Lavender & Mint",
+      description: "Dance, dine, and celebrate with us as we begin our journey together.",
+      icon: "celebration",
+    },
+  ],
+  story: [
+    {
+      year: "2019",
+      title: "The First Meeting",
+      description: "Our paths crossed for the first time at a mutual friend's gathering. Little did we know that this encounter would be the beginning of something beautiful.",
+      icon: "sparkles",
+    },
+    {
+      year: "2020",
+      title: "The Friendship",
+      description: "What started as casual conversations grew into a deep friendship. We discovered we shared the same values, dreams, and a love for adventure.",
+      icon: "heart",
+    },
+    {
+      year: "2024",
+      title: "The Proposal",
+      description: "On a special evening under the stars, Daberechukwu asked Oreoluwa to be his forever. She said yes, and our hearts rejoiced!",
+      icon: "ring",
+    },
+    {
+      year: "2026",
+      title: "The Wedding",
+      description: "Now, we invite you to witness the beginning of our forever as we join our lives in love and celebration.",
+      icon: "celebration",
+    },
+  ],
+  asoEbi: {
+    title: "Be Part of the Celebration",
+    description: "Join our Aso Ebi family and celebrate with us in unity and style. Your support means the world to us.",
+    packages: [
+      {
+        id: "standard",
+        name: "Standard Package",
+        fabric: "Ankara - Lavender & Mint Pattern",
+        price: "₦25,000",
+        includes: [
+          "6 yards of premium Ankara fabric",
+          "Aso Ebi brooch",
+          "Event access for 1 person",
+        ],
+        deadline: "February 28th, 2026",
+        popular: true,
+      },
+      {
+        id: "premium",
+        name: "Premium Package",
+        fabric: "George Wrapper - Lavender",
+        price: "₦45,000",
+        includes: [
+          "6 yards of premium George wrapper",
+          "Matching blouse material",
+          "Aso Ebi brooch",
+          "Event access for 1 person",
+          "Reserved seating",
+        ],
+        deadline: "February 28th, 2026",
+        popular: false,
+      },
+    ],
+    contact: {
+      name: "Princess",
+      phone: "+2347010180279",
+      whatsapp: "2347010180279",
+    },
+  },
+  registry: {
+    title: "Your Presence Is Our Greatest Gift",
+    description: "For those who wish to bless us further, we've created a registry of items that will help us build our forever home together.",
+    categories: [
+      {
+        id: "home",
+        name: "Home & Living",
+        items: [
+          { id: 1, name: "Dinner Set", description: "12-piece porcelain dinner set", price: "₦45,000", image: "🍽️" },
+          { id: 2, name: "Kitchen Appliance Bundle", description: "Blender, toaster, and kettle set", price: "₦65,000", image: "🏠" },
+          { id: 3, name: "Bedding Collection", description: "King-size premium bedding set", price: "₦85,000", image: "🛏️" },
+        ],
+      },
+      {
+        id: "travel",
+        name: "Honeymoon Fund",
+        items: [
+          { id: 4, name: "Honeymoon Contribution", description: "Help us create beautiful memories", price: "Any amount", image: "✈️" },
+        ],
+      },
+      {
+        id: "cash",
+        name: "Cash Gift",
+        items: [
+          { id: 5, name: "Monetary Gift", description: "Send via bank transfer", price: "Any amount", image: "💝" },
+        ],
+      },
+    ],
+    bankDetails: {
+      bank: "Guaranty Trust Bank",
+      accountName: "Philus-Ogun Oreoluwa Toluwanimi",
+      accountNumber: "XXXXXXXXXX",
+    },
+  },
+  faq: [
+    {
+      question: "What should I wear?",
+      answer: "The color code for the wedding is Lavender and Mint. Traditional Nigerian attire or formal/semi-formal wear in the color code is appreciated.",
+    },
+    {
+      question: "Where is the venue?",
+      answer: "The wedding will be held at The Charis Center, located at Etal Avenue First Bank B/Stop, off Kudirat Abiola Way, Oregun Ikeja, Lagos. There is adequate parking available at the venue.",
+    },
+    {
+      question: "Can I bring a plus one?",
+      answer: "No. Each invitation is for the guest specified on the invitation. Children are welcome but must be accompanied and supervised by their parent or guardian.",
+    },
+    {
+      question: "Are children invited?",
+      answer: "Yes. Children are welcome, but we kindly ask parents to look after their wards throughout the celebration.",
+    },
+    {
+      question: "When should I RSVP?",
+      answer: "As soon as possible. Kindly respond before the wedding day so we can plan accordingly.",
+    },
+    {
+      question: "Where can I get the Aso Ebi?",
+      answer: "Please contact Princess for the Aso Ebi. Their contact details are in the Aso Ebi section.",
+    },
+    {
+      question: "Is there parking at the venue?",
+      answer: "Yes, The Charis Center has adequate parking space for all guests.",
+    },
+    {
+      question: "Can I send a gift?",
+      answer: "Yes. Cash gifts are warmly appreciated. Please see the Gifting Us section for bank transfer details.",
+    },
+    {
+      question: "What time should I arrive?",
+      answer: "Please arrive early so you can settle in and enjoy the celebration. Traditional ceremony starts at 8:00 AM and Church ceremony at 11:00 AM.",
+    },
+  ],
+  contact: {
+    title: "Need Help?",
+    description: "Have questions? Our wedding coordinator is here to help.",
+    persons: [
+      {
+        name: "Mrs Ayoola",
+        role: "Wedding Coordinator",
+        phone: "+234XXX XXX XXX",
+        whatsapp: "234XXX XXX XXX",
+        email: "ayoola@oreoluwaanddaberechukwu.com",
+      },
+    ],
+  },
+  dressCode: {
+    traditional: {
+      title: "Traditional Wedding",
+      colors: ["Lavender", "Mint Green", "Soft Sage"],
+      description: "Traditional Nigerian attire or formal/semi-formal in the wedding color palette",
+      icons: ["👔", "👗", "🧣"],
+    },
+  },
+  gallery: {
+    title: "Our Journey",
+    description: "A glimpse into our love story",
+    images: [
+      { id: 1, src: "/images/gallery-1.jpg", alt: "Our first date", category: "engagement" },
+      { id: 2, src: "/images/gallery-2.jpg", alt: "The proposal", category: "engagement" },
+      { id: 3, src: "/images/gallery-3.jpg", alt: "Pre-wedding shoot", category: "prewedding" },
+      { id: 4, src: "/images/gallery-4.jpg", alt: "Together in Paris", category: "travel" },
+      { id: 5, src: "/images/gallery-5.jpg", alt: "Beach moments", category: "prewedding" },
+      { id: 6, src: "/images/gallery-6.jpg", alt: "Family gathering", category: "family" },
+    ],
+  },
+  social: {
+    instagram: "https://instagram.com/oreoluwaanddaberechukwu",
+    twitter: "https://twitter.com/oreoluwaanddaberechukwu",
+    facebook: "https://facebook.com/oreoluwaanddaberechukwu",
+  },
+};

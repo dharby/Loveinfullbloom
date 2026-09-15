@@ -1,0 +1,290 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-cream: #FAF8FB;
+  --color-cream-dark: #F0ECF3;
+  --color-mint: #3A7D5C;
+  --color-mint-light: #5A9D7C;
+  --color-mint-dark: #2D6A4F;
+  --color-lavender: #9B8CB7;
+  --color-lavender-light: #C4B8D9;
+  --color-lavender-dark: #7B6C9A;
+  --color-sage: #8FB89A;
+  --color-sage-light: #C5D9CA;
+  --color-ink: #2C2C2C;
+  --color-ink-soft: #5A5A5A;
+  --color-ink-muted: #8A8A8A;
+  --color-watercolor1: #E8E0F0;
+  --color-watercolor2: #D5E8E0;
+  --font-serif: "Cormorant Garamond", "Georgia", serif;
+  --font-script: "Great Vibes", cursive;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+:root {
+  --background: #FAF8FB;
+  --foreground: #2C2C2C;
+  scroll-behavior: smooth;
+}
+
+.dark {
+  --background: #2D6A4F;
+  --foreground: #FAF8FB;
+}
+
+html {
+  overflow-x: hidden;
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scroll lock utility */
+.scroll-locked {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+
+/* Elegant scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-lavender-light); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-lavender); }
+
+/* Selection */
+::selection {
+  background: rgba(155, 140, 183, 0.2);
+  color: var(--color-mint-dark);
+}
+
+/* Envelope layers */
+.envelope-scene {
+  perspective: 1800px;
+  transform-style: preserve-3d;
+}
+
+.envelope-flap {
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.envelope-flap-back {
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform: rotateX(180deg);
+}
+
+/* Pulse ring for seal */
+@keyframes seal-pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  70% { transform: scale(1.25); opacity: 0; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+@keyframes seal-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Botanical float */
+@keyframes botanical-sway {
+  0%, 100% { transform: rotate(0deg) translateX(0); }
+  25% { transform: rotate(0.5deg) translateX(1px); }
+  75% { transform: rotate(-0.5deg) translateX(-1px); }
+}
+
+/* Confetti / petal fall */
+@keyframes petal-drift {
+  0% { transform: translateY(-5vh) rotate(0deg) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(105vh) rotate(360deg) translateX(var(--drift, 20px)); opacity: 0; }
+}
+
+/* Countdown digit flip */
+@keyframes count-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Form focus ring */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-lavender) !important;
+  box-shadow: 0 0 0 1px var(--color-lavender);
+  border-radius: 4px;
+}
+
+/* Form and button rounded corners */
+input, textarea, select, button {
+  border-radius: 4px;
+}
+
+/* Image rounded corners */
+img {
+  border-radius: 4px;
+}
+
+/* Interactive elements hover states */
+button:hover, input[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.15);
+}
+
+/* Draw line animation for dividers */
+@keyframes draw-line {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Float particle for botanical elements */
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+  50% { transform: translateY(-8px) rotate(3deg); opacity: 0.7; }
+}
+
+/* Subtle scale pulse */
+@keyframes scale-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-cream: #2D6A4F;
+  --color-cream-dark: #1F4D38;
+  --color-mint: #5A9D7C;
+  --color-mint-light: #7ABD9C;
+  --color-mint-dark: #3A7D5C;
+  --color-lavender: #C4B8D9;
+  --color-lavender-light: #E8E0F0;
+  --color-lavender-dark: #9B8CB7;
+  --color-ink: #FAF8FB;
+  --color-ink-soft: #E8E0F0;
+  --color-ink-muted: #C4B8D9;
+}
+
+.dark body {
+  background: #2D6A4F;
+  color: #FAF8FB;
+}
+
+/* Dark mode section backgrounds */
+.dark .bg-cream { background-color: #2D6A4F; }
+.dark .bg-cream-dark { background-color: #1F4D38; }
+.dark .bg-cream\/50 { background-color: rgba(45, 106, 79, 0.5); }
+
+/* Dark mode text */
+.dark .text-mint { color: #FAF8FB; }
+.dark .text-mint-light { color: #C4B8D9; }
+.dark .text-ink { color: #FAF8FB; }
+.dark .text-ink-soft { color: #E8E0F0; }
+.dark .text-ink-muted { color: #C4B8D9; }
+.dark .text-ink-muted\/50 { color: rgba(196, 184, 217, 0.5); }
+.dark .text-ink-muted\/60 { color: rgba(196, 184, 217, 0.6); }
+.dark .text-ink-muted\/40 { color: rgba(196, 184, 217, 0.4); }
+.dark .text-lavender\/70 { color: rgba(196, 184, 217, 0.7); }
+.dark .text-lavender\/60 { color: rgba(196, 184, 217, 0.6); }
+
+/* Dark mode borders */
+.dark .border-sage\/40 { border-color: rgba(143, 184, 154, 0.4); }
+.dark .border-sage\/60 { border-color: rgba(143, 184, 154, 0.6); }
+.dark .border-sage { border-color: #8FB89A; }
+.dark .border-sage\/30 { border-color: rgba(143, 184, 154, 0.3); }
+.dark .border-sage\/50 { border-color: rgba(143, 184, 154, 0.5); }
+.dark .border-mint\/20 { border-color: rgba(250, 248, 251, 0.2); }
+
+/* Dark mode cards and backgrounds */
+.dark .bg-white { background-color: #1F4D38; }
+.dark .bg-white\/50 { background-color: rgba(31, 77, 56, 0.5); }
+.dark .bg-white\/60 { background-color: rgba(31, 77, 56, 0.6); }
+
+/* Dark mode form elements */
+.dark input, .dark textarea, .dark select {
+  background-color: #1F4D38;
+  border-color: rgba(143, 184, 154, 0.6);
+  color: #FAF8FB;
+}
+
+.dark input::placeholder, .dark textarea::placeholder {
+  color: rgba(196, 184, 217, 0.4);
+}
+
+/* Dark mode section backgrounds */
+.dark section {
+  background-color: transparent;
+}
+
+/* Dark mode footer */
+.dark footer.bg-mint {
+  background-color: #1F4D38;
+}
+
+/* Dark mode lavender accent contrast */
+.dark .text-lavender { color: #C4B8D9; }
+.dark .text-lavender\/40 { color: rgba(196, 184, 217, 0.4); }
+.dark .text-lavender\/20 { color: rgba(196, 184, 217, 0.2); }
+.dark .bg-lavender\/30 { background-color: rgba(196, 184, 217, 0.3); }
+.dark .bg-lavender\/40 { background-color: rgba(196, 184, 217, 0.4); }
+.dark .bg-lavender\/20 { background-color: rgba(196, 184, 217, 0.2); }
+.dark .border-lavender\/30 { border-color: rgba(196, 184, 217, 0.3); }
+.dark .border-lavender\/40 { border-color: rgba(196, 184, 217, 0.4); }
+
+/* Dark mode sage contrast */
+.dark .text-sage { color: #8FB89A; }
+.dark .text-sage-soft { color: #A8CDB3; }
+.dark .bg-sage-light { background-color: #1F4D38; }
+.dark .border-sage { border-color: #3A7D5C; }
+
+/* Light mode sage */
+.sage { color: #8FB89A; }
+.sage-soft { color: rgba(143, 184, 154, 0.3); }
+.bg-sage-light { background-color: #E8F0EA; }
+.border-sage { border-color: #C5D9CA; }
+
+/* Dark mode card and section backgrounds */
+.dark .bg-sage-light { background-color: #1F4D38; }
+.dark .bg-cream { background-color: #2D6A4F; }
+.dark .bg-cream-dark { background-color: #1F4D38; }
+.dark .bg-cream\/50 { background-color: rgba(45, 106, 79, 0.5); }
+
+/* Dark mode borders */
+.dark .border-sage { border-color: #3A7D5C; }
+.dark .border-mint-soft\/20 { border-color: rgba(90, 157, 124, 0.2); }
+.dark .border-mint\/10 { border-color: rgba(45, 106, 79, 0.1); }
+
+/* Dark mode text colors */
+.dark .text-ink { color: #FAF8FB; }
+.dark .text-ink-soft { color: #C5D9CA; }
+.dark .text-ink-muted { color: #A8CDB3; }
+.dark .text-mint { color: #FAF8FB; }
+.dark .text-mint-light { color: #A8CDB3; }
