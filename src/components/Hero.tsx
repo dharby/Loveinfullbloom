@@ -190,9 +190,9 @@ export default function Hero() {
       </div>
 
       {/* Desktop: side-by-side layout */}
-      <div className="relative z-10 hidden md:flex items-center justify-center w-full max-w-6xl mx-auto px-8 gap-12 lg:gap-16">
+      <div className="relative z-10 hidden md:flex items-center justify-center w-full max-w-6xl mx-auto px-8 lg:px-12 gap-10 lg:gap-16">
         {/* Left: text content */}
-        <div className="flex-1 text-center lg:text-right">
+        <div className="flex-1 text-center">
           <motion.p
             custom={0}
             initial="hidden"
@@ -208,7 +208,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="text-[1.15rem] font-script text-lavender/70 tracking-wide mb-5"
+            className="text-[1.15rem] font-script text-lavender/70 tracking-wide mb-6"
           >
             together with their families
           </motion.p>
@@ -218,7 +218,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="text-[5rem] lg:text-[6.5rem] font-serif font-light text-mint leading-[0.9] tracking-[-0.02em] mb-1"
+            className="text-[4.5rem] lg:text-[6rem] font-serif font-light text-mint leading-[0.9] tracking-[-0.02em] mb-1"
           >
             {weddingData.couple.bride.firstName}
           </motion.h1>
@@ -228,7 +228,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="block text-lavender text-[1.5rem] font-script my-1"
+            className="block text-lavender text-[1.5rem] font-script my-2"
           >
             &amp;
           </motion.span>
@@ -238,7 +238,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="text-[5rem] lg:text-[6.5rem] font-serif font-light text-mint leading-[0.9] tracking-[-0.02em] mb-6"
+            className="text-[4.5rem] lg:text-[6rem] font-serif font-light text-mint leading-[0.9] tracking-[-0.02em] mb-8"
           >
             {weddingData.couple.groom.firstName}
           </motion.h1>
@@ -248,7 +248,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="flex items-center justify-center lg:justify-end gap-4 mb-6"
+            className="flex items-center justify-center gap-4 mb-8"
           >
             <span className="w-12 h-px bg-lavender/40" />
             <span className="text-[0.7rem] uppercase tracking-[0.25em] text-ink-muted font-sans">
@@ -272,7 +272,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="flex items-center justify-center lg:justify-end gap-4"
+            className="flex items-center justify-center gap-4"
           >
             <button
               onClick={() => scrollTo("#details")}
@@ -299,7 +299,7 @@ export default function Hero() {
         >
           <div className="relative">
             {/* Decorative arch frame */}
-            <div className="w-64 h-80 lg:w-72 lg:h-96 rounded-t-full border-[3px] border-lavender/40 overflow-hidden relative shadow-xl shadow-lavender/10">
+            <div className="w-72 h-[26rem] lg:w-80 lg:h-[30rem] rounded-t-full border-[3px] border-lavender/40 overflow-hidden relative shadow-xl shadow-lavender/10">
               <img
                 src="/og-image.jpg"
                 alt="Oreoluwa and Daberechukwu"
@@ -309,18 +309,18 @@ export default function Hero() {
               <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-cream/40 to-transparent" />
             </div>
             {/* Decorative line below arch */}
-            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-56 h-[2px] bg-gradient-to-r from-transparent via-lavender/40 to-transparent" />
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-64 h-[2px] bg-gradient-to-r from-transparent via-lavender/40 to-transparent" />
             {/* Small monogram */}
             <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
               <span className="text-[0.65rem] font-serif text-lavender/50 tracking-wider">O &amp; D</span>
             </div>
             {/* Botanical accent left */}
-            <svg className="absolute -left-8 top-1/4 w-16 h-24 opacity-[0.15]" viewBox="0 0 60 100" fill="none">
+            <svg className="absolute -left-10 top-1/4 w-16 h-24 opacity-[0.15]" viewBox="0 0 60 100" fill="none">
               <path d="M30 90 Q20 60 25 40 Q30 20 20 10 Q35 25 35 45 Q35 65 30 90" stroke="#3A7D5C" strokeWidth="1"/>
               <circle cx="20" cy="10" r="2" fill="#9B8CB7" opacity="0.5"/>
             </svg>
             {/* Botanical accent right */}
-            <svg className="absolute -right-8 top-1/3 w-16 h-24 opacity-[0.15] scale-x-[-1]" viewBox="0 0 60 100" fill="none">
+            <svg className="absolute -right-10 top-1/3 w-16 h-24 opacity-[0.15] scale-x-[-1]" viewBox="0 0 60 100" fill="none">
               <path d="M30 90 Q20 60 25 40 Q30 20 20 10 Q35 25 35 45 Q35 65 30 90" stroke="#9B8CB7" strokeWidth="1"/>
               <circle cx="20" cy="10" r="2" fill="#3A7D5C" opacity="0.5"/>
             </svg>
