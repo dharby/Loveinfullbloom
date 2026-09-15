@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { weddingData } from "@/data/wedding";
+import { useTheme } from "@/lib/ThemeContext";
 
 const links = [
   { name: "Home", href: "#home" },
@@ -18,6 +19,7 @@ const links = [
 export default function Navigation() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { theme } = useTheme();
 
   const [showRSVP, setShowRSVP] = useState(false);
 
@@ -54,7 +56,9 @@ export default function Navigation() {
         transition={{ duration: 0.7, delay: 0.3 }}
         className="hidden md:flex fixed top-0 inset-x-0 z-50 justify-center transition-all duration-500 backdrop-blur-md"
         style={{
-          background: scrolled ? "rgba(250,248,251,0.95)" : "transparent",
+          background: scrolled
+            ? theme === "dark" ? "rgba(45,106,79,0.95)" : "rgba(250,248,251,0.95)"
+            : "transparent",
           borderBottom: scrolled ? "1px solid rgba(196,184,217,0.3)" : "none",
         }}
       >
@@ -79,7 +83,9 @@ export default function Navigation() {
         transition={{ duration: 0.6, delay: 0.3 }}
         className="md:hidden fixed top-0 inset-x-0 z-50 flex items-center justify-between px-5 py-3 transition-all duration-400 backdrop-blur-md"
         style={{
-          background: scrolled ? "rgba(250,248,251,0.95)" : "transparent",
+          background: scrolled
+            ? theme === "dark" ? "rgba(45,106,79,0.95)" : "rgba(250,248,251,0.95)"
+            : "transparent",
           borderBottom: scrolled ? "1px solid rgba(196,184,217,0.3)" : "none",
         }}
       >

@@ -178,9 +178,15 @@ export default function GiftRegistry() {
             <h3 className="text-[1.35rem] sm:text-[1.6rem] font-serif text-mint mb-2">
               Thank you, {name.split(" ")[0]}
             </h3>
-            <p className="text-[0.85rem] sm:text-[0.9rem] text-ink-muted font-sans leading-relaxed">
+            <p className="text-[0.85rem] sm:text-[0.9rem] text-ink-muted font-sans leading-relaxed mb-5">
               Your kindness means so much to us.
             </p>
+            <button
+              onClick={() => { setSent(false); setShowForm(false); setName(""); setContact(""); }}
+              className="h-11 px-6 bg-transparent text-mint text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] font-sans font-medium border border-sage rounded-[3px] transition-all duration-300 hover:bg-sage-light/50 hover:-translate-y-0.5 active:scale-[0.98]"
+            >
+              ← Back to Bank Details
+            </button>
           </motion.div>
         )}
       </div>
