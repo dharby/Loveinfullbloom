@@ -63,10 +63,10 @@ export default function Navigation() {
             <button
               key={l.name}
               onClick={() => nav(l.href)}
-              className="text-[0.6rem] uppercase tracking-[0.2em] font-sans text-ink-soft/70 dark:text-cream/80 hover:text-mint dark:hover:text-lavender transition-colors duration-300 relative group"
+              className="text-[0.6rem] uppercase tracking-[0.2em] font-sans text-ink-soft/70 dark:text-cream/80 hover:text-mint dark:hover:text-lavender transition-colors duration-300 relative group py-1"
             >
               {l.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-lavender group-hover:w-full transition-all duration-300" />
+              <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-px bg-lavender group-hover:w-full transition-all duration-300 rounded-full" />
             </button>
           ))}
         </div>

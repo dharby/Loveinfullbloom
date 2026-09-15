@@ -31,47 +31,58 @@ export default function FAQ() {
         </motion.div>
 
         <div className="space-y-2">
-          {weddingData.faq.map((faq, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 0.6 }}
-              className="border border-sage/40 rounded-[2px] bg-white/60 overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left"
+          {weddingData.faq.map((faq, i) => {
+            const isOpen = openIndex === i;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05, duration: 0.6 }}
+                className="border border-sage/40 rounded-[2px] bg-white/60 overflow-hidden"
+                layout
               >
-                <span className="text-[0.95rem] sm:text-[1rem] font-sans text-mint font-medium pr-4">
-                  {faq.question}
-                </span>
-                <motion.span
-                  animate={{ rotate: openIndex === i ? 45 : 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="text-lavender text-lg flex-shrink-0"
+                <button
+                  onClick={() => setOpenIndex(isOpen ? null : i)}
+                  className="w-full flex items-center justify-between px-5 py-4 text-left"
+                  aria-expanded={isOpen}
                 >
-                  +
-                </motion.span>
-              </button>
-              <AnimatePresence>
-                {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden"
+                  <span className="text-[0.95rem] sm:text-[1rem] font-sans text-mint font-medium pr-4">
+                    {faq.question}
+                  </span>
+                  <motion.span
+                    animate={{ rotate: isOpen ? 135 : 0 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 15 }}
+                    className="text-lavender text-lg flex-shrink-0"
                   >
-                    <div className="px-5 pb-4 text-[0.85rem] sm:text-[0.9rem] text-ink-muted font-sans leading-relaxed border-t border-sage/20 pt-3">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                    +
+                  </motion.span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="answer"
+                      initial={{ height: 0, opacity: 0, filter: "blur(4px)" }}
+                      animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
+                      exit={{ height: 0, opacity: 0, filter: "blur(4px)" }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <motion.div
+                        initial={{ y: -8 }}
+                        animate={{ y: 0 }}
+                        transition={{ delay: 0.08, duration: 0.3, ease: "easeOut" }}
+                        className="px-5 pb-4 text-[0.85rem] sm:text-[0.9rem] text-ink-muted font-sans leading-relaxed border-t border-sage/20 pt-3"
+                      >
+                        {faq.answer}
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 

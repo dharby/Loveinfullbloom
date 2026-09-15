@@ -200,9 +200,10 @@ export default function RSVP() {
             {step === "search" && (
               <motion.div
                 key="search"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="space-y-4"
               >
                 <div>
@@ -280,9 +281,10 @@ export default function RSVP() {
             {step === "form" && (selectedGuest || isNewGuest) && (
               <motion.div
                 key="form"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="mb-6 p-4 bg-mint/5 border border-mint/20 rounded-[2px] text-center">
                   <p className="text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.15em] text-ink-muted/60 font-sans mb-1">
@@ -437,8 +439,9 @@ export default function RSVP() {
             {step === "result" && result && (
               <motion.div
                 key="result"
-                initial={{ opacity: 0, scale: 0.96 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15 }}
                 className="text-center"
               >
                 <div className="w-14 h-14 mx-auto mb-6 rounded-full bg-mint flex items-center justify-center">

@@ -22,6 +22,32 @@ const quotes = [
 const hearts = ["♡", "♥"];
 const sparkles = ["✦"];
 
+function FloatingBotanical({ delay, side }: { delay: number; side: "left" | "right" }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: "110vh", rotate: 0 }}
+      animate={{
+        opacity: [0, 0.08, 0.08, 0],
+        y: ["110vh", "80vh", "40vh", "-10vh"],
+        rotate: [0, side === "left" ? 15 : -15, side === "left" ? -10 : 10, 0],
+        x: [0, side === "left" ? 20 : -20, side === "left" ? -15 : 15, 0],
+      }}
+      transition={{ duration: 18 + delay * 2, delay, repeat: Infinity, ease: "linear" }}
+      className="absolute pointer-events-none"
+      style={{ [side]: `${5 + delay * 3}%` }}
+    >
+      <svg width="80" height="120" viewBox="0 0 80 120" fill="none" className="opacity-60">
+        <path d="M40 110 Q35 80 38 60 Q41 40 35 25 Q30 10 45 5 Q55 0 50 15 Q45 30 42 45 Q39 60 40 110" stroke="var(--color-sage)" strokeWidth="0.8" fill="none"/>
+        <path d="M38 60 Q25 50 18 55 Q12 60 20 65 Q28 70 38 60" stroke="var(--color-sage)" strokeWidth="0.6" fill="none"/>
+        <path d="M42 45 Q55 38 60 42 Q65 48 55 50 Q45 52 42 45" stroke="var(--color-sage)" strokeWidth="0.6" fill="none"/>
+        <circle cx="45" cy="5" r="2" fill="var(--color-lavender)" opacity="0.4"/>
+        <circle cx="18" cy="55" r="1.5" fill="var(--color-lavender)" opacity="0.3"/>
+        <circle cx="60" cy="42" r="1.5" fill="var(--color-lavender)" opacity="0.3"/>
+      </svg>
+    </motion.div>
+  );
+}
+
 export default function FloatingElements() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showing, setShowing] = useState(false);
@@ -88,6 +114,15 @@ export default function FloatingElements() {
 
   return (
     <>
+      {/* Floating botanical background elements */}
+      <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden" aria-hidden="true">
+        <FloatingBotanical delay={0} side="left" />
+        <FloatingBotanical delay={6} side="right" />
+        <FloatingBotanical delay={12} side="left" />
+        <FloatingBotanical delay={18} side="right" />
+      </div>
+
+      {/* Floating hearts and sparkles */}
       <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden" aria-hidden="true">
         {floatingItems.map((item) => (
           <motion.div
@@ -105,6 +140,7 @@ export default function FloatingElements() {
         ))}
       </div>
 
+      {/* Verse popup */}
       <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-40 w-full max-w-xs px-4">
         <AnimatePresence mode="wait">
           {showing && !dismissed && (

@@ -231,6 +231,53 @@ h1, h2, h3 {
   50% { transform: scale(1.15); }
 }
 
+/* Subtle gradient shift for hero background */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Fabric shimmer effect on hover */
+.fabric-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.fabric-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.fabric-shimmer:hover::after {
+  left: 100%;
+}
+
+/* Color swatch shimmer */
+.swatch-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.swatch-shimmer::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.swatch-shimmer:hover::after {
+  opacity: 1;
+}
+
 /* Prefers reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

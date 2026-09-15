@@ -58,10 +58,10 @@ export default function DressCode() {
           {dressImages.map((img, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.8, y: 16 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 + 0.2, duration: 0.6 }}
+              transition={{ delay: i * 0.1 + 0.15, type: "spring", stiffness: 200, damping: 15 }}
               className="relative aspect-[3/4] overflow-hidden rounded-[2px] bg-sage-light dark:bg-mint-dark group"
             >
               <img
@@ -106,7 +106,7 @@ export default function DressCode() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 + 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="relative mx-auto w-full aspect-square max-w-[6rem] sm:max-w-[7rem] md:max-w-[8rem] rounded-[2px] overflow-hidden border border-sage/40 dark:border-mint-light/30 transition-transform duration-500 group-hover:scale-[1.03]"
+                className="relative mx-auto w-full aspect-square max-w-[6rem] sm:max-w-[7rem] md:max-w-[8rem] rounded-[2px] overflow-hidden border border-sage/40 dark:border-mint-light/30 transition-transform duration-500 group-hover:scale-[1.03] fabric-shimmer"
               >
                 <div className="absolute inset-0" style={{ backgroundColor: c.hex }} />
                 <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/0 group-hover:from-white/[0.06] group-hover:to-transparent transition-all duration-500" />

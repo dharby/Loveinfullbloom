@@ -45,16 +45,17 @@ export default function WeddingDetails() {
         </motion.div>
 
         <div className="space-y-0">
-          {weddingData.events.map((event, i) => (
-            <motion.div
-              key={event.title}
-              custom={i + 1}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={reveal}
-              className="text-center py-8"
-            >
+          {weddingData.events.map((event, i) => {
+            const fromLeft = i % 2 === 0;
+            return (
+              <motion.div
+                key={event.title}
+                initial={{ opacity: 0, x: fromLeft ? -25 : 25 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: i * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="text-center py-8"
+              >
               <h3 className="text-[1.6rem] sm:text-[1.7rem] font-serif font-light text-mint mb-3">
                 {event.title}
               </h3>
@@ -84,7 +85,7 @@ export default function WeddingDetails() {
                 <div className="w-16 h-px bg-lavender/20 mx-auto mt-8" />
               )}
             </motion.div>
-          ))}
+          )})}
         </div>
 
         {/* Actions */}
