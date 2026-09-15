@@ -4,12 +4,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const photos = [
-  { id: 1, label: "Engagement", span: "col-span-1 row-span-2", src: "/images/IMG_7872.JPG" },
-  { id: 2, label: "Portrait", span: "col-span-1 row-span-1", src: "/images/IMG_3769.JPG" },
-  { id: 3, label: "Together", span: "col-span-1 row-span-1", src: "/images/IMG_3773.JPG" },
-  { id: 4, label: "Pre-Wedding", span: "col-span-1 row-span-2", src: "/images/IMG_7359.JPG" },
-  { id: 5, label: "Moments", span: "col-span-1 row-span-1", src: "/images/IMG_7363.JPG" },
-  { id: 6, label: "Celebration", span: "col-span-1 row-span-1", src: "/images/IMG_3764.JPG" },
+  { id: 1, label: "Engagement", src: "/images/IMG_7872.JPG", aspect: "aspect-[3/4]" },
+  { id: 2, label: "Portrait", src: "/images/IMG_3769.JPG", aspect: "aspect-[3/4]" },
+  { id: 3, label: "Together", src: "/images/IMG_3773.JPG", aspect: "aspect-[4/3]" },
+  { id: 4, label: "Pre-Wedding", src: "/images/IMG_7359.JPG", aspect: "aspect-[3/4]" },
+  { id: 5, label: "Moments", src: "/images/IMG_7363.JPG", aspect: "aspect-[3/4]" },
+  { id: 6, label: "Celebration", src: "/images/IMG_3764.JPG", aspect: "aspect-[4/3]" },
 ];
 
 export default function Gallery() {
@@ -48,7 +48,7 @@ export default function Gallery() {
           <p className="text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.3em] text-lavender/70 font-sans mb-3">
             Our Journey
           </p>
-          <h2 className="text-[2rem] sm:text-[2.2rem] font-serif font-light text-mint mb-2">
+          <h2 className="text-[2rem] sm:text-[2.2rem] font-serif font-light text-mint mb-2 text-balance">
             Captured Moments
           </h2>
           <div className="flex items-center justify-center gap-4">
@@ -58,54 +58,52 @@ export default function Gallery() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 auto-rows-[7rem] sm:auto-rows-[10rem]">
+        <div className="columns-2 md:columns-3 gap-3 space-y-3">
           {photos.map((photo, i) => (
             <motion.div
               key={photo.id}
-              initial={{ opacity: 0, scale: 1.04 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.7 }}
-              className={`${photo.span} relative overflow-hidden rounded-[2px] bg-sage-light cursor-pointer group`}
+              className="relative overflow-hidden rounded-[2px] bg-sage-light cursor-pointer group break-inside-avoid"
               onClick={() => setLightbox(photo.id)}
               role="button"
               aria-label={`View ${photo.label} photo`}
               tabIndex={0}
               onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setLightbox(photo.id); }}
             >
-              {!failedImages[photo.id] ? (
-                <img
-                  src={photo.src}
-                  alt={photo.label}
-                  loading="lazy"
-                  onLoad={() => handleImageLoad(photo.id)}
-                  onError={() => handleImageError(photo.id)}
-                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
-                    loadedImages[photo.id] ? "opacity-100" : "opacity-0"
-                  }`}
-                />
-              ) : null}
-              <div className={`absolute inset-0 transition-opacity duration-500 ${
-                loadedImages[photo.id] && !failedImages[photo.id]
-                  ? "bg-gradient-to-br from-transparent via-transparent to-mint/20 opacity-0 group-hover:opacity-100"
-                  : "bg-gradient-to-br from-sage-light via-cream to-sage/20 opacity-60"
-              }`} />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className={`text-[0.7rem] sm:text-[0.75rem] font-sans uppercase tracking-wider transition-colors ${
+              <div className={`${photo.aspect} relative`}>
+                {!failedImages[photo.id] ? (
+                  <img
+                    src={photo.src}
+                    alt={photo.label}
+                    loading="lazy"
+                    onLoad={() => handleImageLoad(photo.id)}
+                    onError={() => handleImageError(photo.id)}
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
+                      loadedImages[photo.id] ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                ) : null}
+                <div className={`absolute inset-0 transition-opacity duration-500 ${
                   loadedImages[photo.id] && !failedImages[photo.id]
-                    ? "text-cream/0 group-hover:text-cream/80 drop-shadow-lg"
-                    : "text-ink-muted/40 group-hover:text-ink-muted/60"
-                }`}>
-                  {failedImages[photo.id] ? photo.label : ""}
-                </span>
+                    ? "bg-gradient-to-br from-transparent via-transparent to-mint/20 opacity-0 group-hover:opacity-100"
+                    : "bg-gradient-to-br from-sage-light via-cream to-sage/20 opacity-60"
+                }`} />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className={`text-[0.7rem] sm:text-[0.75rem] font-sans uppercase tracking-wider transition-colors ${
+                    loadedImages[photo.id] && !failedImages[photo.id]
+                      ? "text-cream/0 group-hover:text-cream/80 drop-shadow-lg"
+                      : "text-ink-muted/40 group-hover:text-ink-muted/60"
+                  }`}>
+                    {failedImages[photo.id] ? photo.label : ""}
+                  </span>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
-
-        <p className="text-center mt-6 text-[0.45rem] sm:text-[0.7rem] text-ink-muted/40 font-sans uppercase tracking-wider">
-          Photos coming soon
-        </p>
       </div>
 
       <AnimatePresence>
@@ -151,18 +149,18 @@ export default function Gallery() {
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-[85vw] max-w-2xl aspect-[4/3] bg-cream/10 rounded-[2px] flex items-center justify-center overflow-hidden"
+              className="w-[85vw] max-w-2xl max-h-[85vh] bg-cream/10 rounded-[2px] flex items-center justify-center overflow-hidden"
             >
               {!failedImages[lightbox] ? (
                 <img
                   src={photos[currentIdx]?.src}
                   alt={photos[currentIdx]?.label}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                   onError={() => lightbox && handleImageError(lightbox)}
                 />
               ) : (
                 <span className="text-cream/40 text-[0.8rem] sm:text-[0.85rem] font-sans uppercase tracking-wider">
-                  {photos[currentIdx]?.label} — Photo {photos[currentIdx]?.id}
+                  {photos[currentIdx]?.label}
                 </span>
               )}
             </motion.div>
