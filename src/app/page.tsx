@@ -18,6 +18,9 @@ import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingElements from "@/components/FloatingElements";
+import Preloader from "@/components/Preloader";
+import ScrollProgress from "@/components/ScrollProgress";
+import BotanicalDivider from "@/components/BotanicalDivider";
 import { useTheme } from "@/lib/ThemeContext";
 
 function ThemeToggle() {
@@ -67,6 +70,7 @@ function MusicToggle({ playing, onToggle }: { playing: boolean; onToggle: () => 
 }
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [musicPlaying, setMusicPlaying] = useState(false);
@@ -88,8 +92,6 @@ export default function Home() {
     }
   }, [musicPlaying]);
 
-  // Attempt autoplay on load (browsers may block until first tap);
-  // keep UI in sync with the actual audio element.
   useEffect(() => {
     playMusic();
     const audio = document.getElementById('wedding-music') as HTMLAudioElement | null;
@@ -113,8 +115,6 @@ export default function Home() {
     return () => document.body.classList.remove("scroll-locked");
   }, [isOpen]);
 
-  // Opening the envelope is a user gesture, so start music here.
-  // It keeps looping until the visitor manually pauses it.
   const handleOpen = useCallback(() => {
     playMusic();
     setIsOpen(true);
@@ -129,7 +129,8 @@ export default function Home() {
 
   return (
     <main className="relative">
-      {/* Always mounted: music starts on envelope tap and loops until manually stopped */}
+      {loading && <Preloader onComplete={() => setLoading(false)} />}
+
       <audio
         id="wedding-music"
         src="/music/MAJOR._-_Why_I_Love_You_(mp3.pm).mp3"
@@ -137,7 +138,6 @@ export default function Home() {
         preload="auto"
         loop
       />
-      {/* Floating music button visible from the envelope splash screen onward */}
       <MusicToggle playing={musicPlaying} onToggle={toggleMusic} />
 
       <AnimatePresence>
@@ -146,6 +146,7 @@ export default function Home() {
 
       {showContent && (
         <>
+          <ScrollProgress />
           <Navigation />
           <ThemeToggle />
           <FloatingElements />
@@ -154,57 +155,57 @@ export default function Home() {
             <Hero />
           </div>
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <FamilyInvitation />
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <div id="story">
             <OurStory />
           </div>
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <WeddingDetails />
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <div id="dresscode">
             <DressCode />
           </div>
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <Gallery />
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <div id="asoebi">
             <AsoEbi />
           </div>
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <div id="registry">
             <GiftRegistry />
           </div>
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <div id="faq">
             <FAQ />
           </div>
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <RSVP />
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <RSVPContacts />
 
-          <div className="w-24 mx-auto border-t border-lavender/30" />
+          <BotanicalDivider />
 
           <div id="contact">
             <Contact />

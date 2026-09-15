@@ -12,7 +12,7 @@ interface EnvelopeOpeningProps {
 export default function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
   const { theme } = useTheme();
   const [phase, setPhase] = useState<"idle" | "ready" | "seal-release" | "flap-open" | "card-emerge" | "card-reveal" | "transition" | "done">("idle");
-  const [petals, setPetals] = useState<Array<{ id: number; x: number; delay: number; dur: number; size: number; rot: number; color: string }>>([]);
+  const [petals, setPetals] = useState<Array<{ id: number; x: number; delay: number; dur: number; size: number; rot: number; color: string; drift: number }>>([]);
 
   // Staggered entrance
   useEffect(() => {
@@ -42,6 +42,7 @@ export default function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
         size: 6 + Math.random() * 12,
         rot: Math.random() * 360,
         color: i % 4 === 0 ? "#9B8CB7" : i % 4 === 1 ? "#C4B8D9" : i % 4 === 2 ? "#3A7D5C" : "#8FB89A",
+        drift: (Math.random() - 0.5) * 40,
       })));
     }, 3800);
     // Complete
@@ -141,7 +142,7 @@ export default function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
               borderRadius: p.id % 3 === 0 ? "50% 0 50% 0" : p.id % 3 === 1 ? "50%" : "2px",
               background: p.color,
               opacity: 0.5,
-              "--drift": `${(Math.random() - 0.5) * 40}px`,
+              "--drift": `${p.drift}px`,
             } as React.CSSProperties}
           />
         ))}
@@ -365,11 +366,12 @@ export default function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
               </motion.div>
 
               {/* LAYER 5: Wax seal */}
-              <motion.button
-                type="button"
-                aria-label="Open the wedding invitation"
-                onClick={(e) => { e.stopPropagation(); handleOpen(); }}
-                animate={
+        <motion.button
+          type="button"
+          aria-label="Open the wedding invitation"
+          onClick={(e) => { e.stopPropagation(); handleOpen(); }}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleOpen(); } }}
+          animate={
                   phase === "seal-release"
                     ? { scale: 0.8, opacity: 0 }
                     : phase === "ready"

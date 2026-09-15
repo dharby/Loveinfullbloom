@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const quotes = [
@@ -10,95 +10,93 @@ const quotes = [
   { text: "What God has joined together, let no one separate", ref: "Matthew 19:6" },
   { text: "Love never fails", ref: "1 Corinthians 13:8" },
   { text: "Commit your way to the Lord", ref: "Psalm 37:5" },
-  { text: "A happy home is built on love and trust", ref: "" },
   { text: "The Lord bless you and keep you", ref: "Numbers 6:24" },
   { text: "Love covers over all wrongs", ref: "1 Peter 4:8" },
   { text: "Be devoted to one another in love", ref: "Romans 12:10" },
-  { text: "May your marriage be filled with joy", ref: "" },
   { text: "Faith, hope, and love remain", ref: "1 Corinthians 13:13" },
   { text: "A cord of three strands is not quickly broken", ref: "Ecclesiastes 4:12" },
   { text: "Love one another deeply, from the heart", ref: "1 Peter 1:22" },
   { text: "He who finds a wife finds what is good", ref: "Proverbs 18:22" },
 ];
 
-const hearts = ["♥", "♡", "❤", "💕", "💍"];
-const sparkles = ["✨", "⭐", "💫", "🌟"];
+const hearts = ["♡", "♥"];
+const sparkles = ["✦"];
 
 export default function FloatingElements() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showing, setShowing] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [floatingItems, setFloatingItems] = useState<Array<{ id: number; type: 'heart' | 'sparkle'; char: string; left: number; delay: number; duration: number }>>([]);
 
-  // Cycle: show for 3s → fade for 1s → hide for 10s → next verse → repeat
   useEffect(() => {
     const startDelay = setTimeout(() => {
       setShowing(true);
-    }, 5000);
+    }, 8000);
     return () => clearTimeout(startDelay);
   }, []);
 
   useEffect(() => {
-    if (!showing) return;
-    // Show for 3s, then hide
-    const showTimer = setTimeout(() => setShowing(false), 3000);
+    if (!showing || dismissed) return;
+    const showTimer = setTimeout(() => setShowing(false), 4000);
     return () => clearTimeout(showTimer);
-  }, [showing, currentIndex]);
+  }, [showing, currentIndex, dismissed]);
 
   useEffect(() => {
-    if (showing) return;
-    // Hide for 10s, then advance to next verse and show
+    if (showing || dismissed) return;
     const hideTimer = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % quotes.length);
       setShowing(true);
-    }, 10000);
+    }, 50000);
     return () => clearTimeout(hideTimer);
-  }, [showing]);
+  }, [showing, dismissed]);
 
-  // Floating hearts and sparkles
   useEffect(() => {
+    if (dismissed) return;
     const interval = setInterval(() => {
       const id = Date.now();
-      const isHeart = Math.random() > 0.5;
+      const isHeart = Math.random() > 0.4;
       const type: 'heart' | 'sparkle' = isHeart ? 'heart' : 'sparkle';
-      const char = isHeart 
+      const char = isHeart
         ? hearts[Math.floor(Math.random() * hearts.length)]
         : sparkles[Math.floor(Math.random() * sparkles.length)];
-      const left = Math.random() * 80 + 10; // 10% to 90%
+      const left = Math.random() * 80 + 10;
       const delay = Math.random() * 0.3;
-      const duration = 4 + Math.random() * 3; // 4-7 seconds
+      const duration = 5 + Math.random() * 4;
 
       setFloatingItems(prev => {
         const newItems = [...prev, { id, type, char, left, delay, duration }];
-        // Keep only last 8 items
-        return newItems.slice(-8);
+        return newItems.slice(-5);
       });
-    }, 2000); // Every 2 seconds
+    }, 6000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [dismissed]);
 
-  // Clean up old items
   useEffect(() => {
     const cleanup = setInterval(() => {
-      setFloatingItems(prev => prev.filter(item => Date.now() - item.id < 7000));
+      setFloatingItems(prev => prev.filter(item => Date.now() - item.id < 9000));
     }, 1000);
     return () => clearInterval(cleanup);
+  }, []);
+
+  const dismiss = useCallback(() => {
+    setDismissed(true);
+    setShowing(false);
   }, []);
 
   const quote = quotes[currentIndex];
 
   return (
     <>
-      {/* Floating hearts and sparkles */}
-      <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden" aria-hidden="true">
         {floatingItems.map((item) => (
           <motion.div
             key={item.id}
             initial={{ opacity: 0, y: '100vh', x: 0, scale: 0.5 }}
-            animate={{ opacity: [0, 0.7, 0.7, 0], y: '-20vh', x: [0, 15, -15, 10], scale: [0.5, 1, 0.8, 0.6] }}
+            animate={{ opacity: [0, 0.5, 0.5, 0], y: '-20vh', x: [0, 10, -10, 5], scale: [0.5, 0.9, 0.7, 0.5] }}
             transition={{ duration: item.duration, delay: item.delay, ease: 'easeOut' }}
-            className={`absolute text-xl sm:text-2xl ${
-              item.type === 'heart' ? 'text-lavender/50 dark:text-lavender/40' : 'text-lavender/40 dark:text-lavender/30'
+            className={`absolute text-lg sm:text-xl ${
+              item.type === 'heart' ? 'text-lavender/40 dark:text-lavender/30' : 'text-lavender/30 dark:text-lavender/20'
             }`}
             style={{ left: `${item.left}%` }}
           >
@@ -107,18 +105,26 @@ export default function FloatingElements() {
         ))}
       </div>
 
-      {/* Bible verse notification — positioned above the music button to avoid blocking hero content */}
-      <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-40 pointer-events-none w-full max-w-xs px-4">
+      <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-40 w-full max-w-xs px-4">
         <AnimatePresence mode="wait">
-          {showing && (
+          {showing && !dismissed && (
             <motion.div
               key={currentIndex}
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
               transition={{ duration: 1, ease: "easeInOut" }}
-              className="bg-mint dark:bg-mint-dark/95 backdrop-blur-md px-5 py-3 rounded-lg shadow-lg border border-lavender/30"
+              className="bg-mint dark:bg-mint-dark/95 backdrop-blur-md px-5 py-3 rounded-lg shadow-lg border border-lavender/30 relative"
             >
+              <button
+                onClick={dismiss}
+                className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cream dark:bg-mint-dark border border-lavender/30 flex items-center justify-center text-ink-muted hover:text-ink transition-colors"
+                aria-label="Dismiss verse"
+              >
+                <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
               <div className="flex items-start gap-3">
                 <span className="text-lavender text-lg mt-0.5">✦</span>
                 <div className="flex-1">

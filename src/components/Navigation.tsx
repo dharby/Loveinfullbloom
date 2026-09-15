@@ -24,10 +24,12 @@ export default function Navigation() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 60);
-      // Hide RSVP button when near bottom (footer area)
-      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
-      setShowRSVP(!nearBottom && window.scrollY > 300);
+      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 400;
+      const scrollDown = window.scrollY > (lastScrollY || 0);
+      lastScrollY = window.scrollY;
+      setShowRSVP(!nearBottom && !scrollDown && window.scrollY > 300);
     };
+    let lastScrollY = 0;
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

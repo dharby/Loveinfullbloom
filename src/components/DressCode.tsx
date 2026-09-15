@@ -70,7 +70,15 @@ export default function DressCode() {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
                 onError={(e) => {
-                  e.currentTarget.style.display = 'none';
+                  const target = e.currentTarget;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    const fallback = document.createElement('div');
+                    fallback.className = 'absolute inset-0 flex items-center justify-center bg-gradient-to-br from-sage-light to-cream';
+                    fallback.innerHTML = `<svg class="w-10 h-10 text-lavender/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`;
+                    parent.appendChild(fallback);
+                  }
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-mint/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

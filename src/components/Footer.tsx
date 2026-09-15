@@ -17,6 +17,11 @@ export default function Footer({ onReplay }: FooterProps) {
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
+          <img
+            src="/monogram.svg"
+            alt="O&D Monogram"
+            className="w-16 h-16 mx-auto mb-4 opacity-80 brightness-0 invert"
+          />
           <p className="text-[2.2rem] sm:text-[2.5rem] font-serif font-light text-cream/90 tracking-[-0.02em] mb-2">
             {weddingData.couple.bride.firstName} &amp; {weddingData.couple.groom.firstName}
           </p>
@@ -34,7 +39,6 @@ export default function Footer({ onReplay }: FooterProps) {
             With love, we cannot wait to celebrate with you.
           </p>
 
-          {/* Botanical accent */}
           <div className="flex items-center justify-center gap-3 mb-8">
             <svg className="w-6 h-6 opacity-20" viewBox="0 0 24 24" fill="none" stroke="#C4B8D9" strokeWidth="0.8">
               <path d="M12 2C8 6 4 10 4 14c0 4 3.5 8 8 8s8-4 8-8c0-4-4-8-8-12z" />
@@ -42,7 +46,6 @@ export default function Footer({ onReplay }: FooterProps) {
             </svg>
           </div>
 
-          {/* Replay invitation */}
           {onReplay && (
             <button
               onClick={onReplay}

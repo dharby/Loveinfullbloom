@@ -74,7 +74,7 @@ export const weddingData = {
       venue: "The Charis Center",
       address: "Etal Avenue First Bank B/Stop, off Kudirat Abiola Way, Oregun Ikeja, Lagos",
       dressCode: "Formal - Color Code: Lavender & Mint",
-      description: "见证我们的爱情在上帝面前永恒结合。",
+      description: "Watch our love unite forever before God.",
       icon: "church",
     },
     {
