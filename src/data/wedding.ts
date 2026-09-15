@@ -251,12 +251,12 @@ export const weddingData = {
     title: "Our Journey",
     description: "A glimpse into our love story",
     images: [
-      { id: 1, src: "/images/gallery-1.jpg", alt: "Our first date", category: "engagement" },
-      { id: 2, src: "/images/gallery-2.jpg", alt: "The proposal", category: "engagement" },
-      { id: 3, src: "/images/gallery-3.jpg", alt: "Pre-wedding shoot", category: "prewedding" },
-      { id: 4, src: "/images/gallery-4.jpg", alt: "Together in Paris", category: "travel" },
-      { id: 5, src: "/images/gallery-5.jpg", alt: "Beach moments", category: "prewedding" },
-      { id: 6, src: "/images/gallery-6.jpg", alt: "Family gathering", category: "family" },
+      { id: 1, src: "/images/IMG_7872.JPG", alt: "Our first date", category: "engagement" },
+      { id: 2, src: "/images/IMG_3769.JPG", alt: "The proposal", category: "engagement" },
+      { id: 3, src: "/images/IMG_3773.JPG", alt: "Pre-wedding shoot", category: "prewedding" },
+      { id: 4, src: "/images/IMG_7359.JPG", alt: "Together in Paris", category: "travel" },
+      { id: 5, src: "/images/IMG_7363.JPG", alt: "Beach moments", category: "prewedding" },
+      { id: 6, src: "/images/IMG_3764.JPG", alt: "Family gathering", category: "family" },
     ],
   },
   social: {

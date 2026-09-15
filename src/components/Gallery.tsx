@@ -4,12 +4,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const photos = [
-  { id: 1, label: "Engagement", span: "col-span-1 row-span-2", src: "/images/gallery-1.jpg" },
-  { id: 2, label: "Portrait", span: "col-span-1 row-span-1", src: "/images/gallery-2.jpg" },
-  { id: 3, label: "Together", span: "col-span-1 row-span-1", src: "/images/gallery-3.jpg" },
-  { id: 4, label: "Pre-Wedding", span: "col-span-1 row-span-2", src: "/images/gallery-4.jpg" },
-  { id: 5, label: "Moments", span: "col-span-1 row-span-1", src: "/images/gallery-5.jpg" },
-  { id: 6, label: "Celebration", span: "col-span-1 row-span-1", src: "/images/gallery-6.jpg" },
+  { id: 1, label: "Engagement", span: "col-span-1 row-span-2", src: "/images/IMG_7872.JPG" },
+  { id: 2, label: "Portrait", span: "col-span-1 row-span-1", src: "/images/IMG_3769.JPG" },
+  { id: 3, label: "Together", span: "col-span-1 row-span-1", src: "/images/IMG_3773.JPG" },
+  { id: 4, label: "Pre-Wedding", span: "col-span-1 row-span-2", src: "/images/IMG_7359.JPG" },
+  { id: 5, label: "Moments", span: "col-span-1 row-span-1", src: "/images/IMG_7363.JPG" },
+  { id: 6, label: "Celebration", span: "col-span-1 row-span-1", src: "/images/IMG_3764.JPG" },
 ];
 
 export default function Gallery() {
