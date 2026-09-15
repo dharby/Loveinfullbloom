@@ -22,9 +22,9 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           <img
-            src="/monogram.svg"
+            src="/monogram-new.svg"
             alt="O&D Monogram"
-            className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-4"
+            className="w-28 h-28 md:w-36 md:h-36 mx-auto mb-4"
           />
         </motion.div>
         <motion.p

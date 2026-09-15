@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Outer circle -->
+  <circle cx="100" cy="100" r="90" stroke="#C4B8D9" stroke-width="1.5" fill="none"/>
+  
+  <!-- Botanical leaves - left side -->
+  <g opacity="0.6">
+    <path d="M35 130 Q40 120 38 110 Q36 100 42 95 Q48 90 45 100 Q42 110 44 120 Q46 128 35 130Z" stroke="#C4B8D9" stroke-width="1" fill="none"/>
+    <path d="M42 95 Q50 88 48 80 Q46 72 52 68 Q58 64 55 74 Q52 84 50 90" stroke="#C4B8D9" stroke-width="0.8" fill="none"/>
+    <path d="M38 110 Q30 105 28 98 Q26 90 32 88 Q38 86 36 95 Q34 104 38 110" stroke="#C4B8D9" stroke-width="0.8" fill="none"/>
+    <circle cx="52" cy="68" r="1.5" fill="#C4B8D9" opacity="0.5"/>
+    <circle cx="28" cy="98" r="1.5" fill="#C4B8D9" opacity="0.5"/>
+  </g>
+  
+  <!-- Botanical leaves - right side -->
+  <g opacity="0.6">
+    <path d="M165 70 Q160 80 162 90 Q164 100 158 105 Q152 110 155 100 Q158 90 156 82 Q154 74 165 70Z" stroke="#C4B8D9" stroke-width="1" fill="none"/>
+    <path d="M158 105 Q150 112 152 120 Q154 128 148 132 Q142 136 145 126 Q148 116 150 110" stroke="#C4B8D9" stroke-width="0.8" fill="none"/>
+    <path d="M162 90 Q170 95 172 102 Q174 110 168 112 Q162 114 164 105 Q166 96 162 90" stroke="#C4B8D9" stroke-width="0.8" fill="none"/>
+    <circle cx="148" cy="132" r="1.5" fill="#C4B8D9" opacity="0.5"/>
+    <circle cx="172" cy="102" r="1.5" fill="#C4B8D9" opacity="0.5"/>
+  </g>
+  
+  <!-- Calligraphic O -->
+  <path d="M68 95 Q60 80 65 68 Q70 56 82 55 Q94 54 98 65 Q102 76 95 88 Q88 100 78 105 Q68 110 62 100 Q56 90 68 95Z" 
+        stroke="#C4B8D9" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Calligraphic D -->
+  <path d="M108 60 L108 105 Q108 115 118 118 Q128 121 138 115 Q148 109 150 95 Q152 81 145 70 Q138 59 128 56 Q118 53 112 58" 
+        stroke="#C4B8D9" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Decorative swirl on O -->
+  <path d="M82 55 Q78 48 85 45 Q92 42 96 50" 
+        stroke="#C4B8D9" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  
+  <!-- Decorative swirl on D -->
+  <path d="M128 56 Q132 48 125 44 Q118 40 112 48" 
+        stroke="#C4B8D9" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+</svg>

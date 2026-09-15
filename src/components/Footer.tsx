@@ -18,9 +18,10 @@ export default function Footer({ onReplay }: FooterProps) {
           transition={{ duration: 1 }}
         >
           <img
-            src="/monogram.svg"
+            src="/monogram-new.svg"
             alt="O&D Monogram"
-            className="w-16 h-16 mx-auto mb-4 opacity-80 brightness-0 invert"
+            className="w-20 h-20 mx-auto mb-4 opacity-80"
+            style={{ filter: "brightness(0) invert(1) opacity(0.8)" }}
           />
           <p className="text-[2.2rem] sm:text-[2.5rem] font-serif font-light text-cream/90 tracking-[-0.02em] mb-2">
             {weddingData.couple.bride.firstName} &amp; {weddingData.couple.groom.firstName}
