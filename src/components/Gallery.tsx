@@ -13,7 +13,7 @@ const photos = [
   { id: 7, src: "/images/IMG_9398.JPG" },
 ];
 
-const AUTO_PLAY_INTERVAL = 4000;
+const AUTO_PLAY_INTERVAL = 3000;
 
 export default function Gallery() {
   const [current, setCurrent] = useState(0);
@@ -136,8 +136,8 @@ export default function Gallery() {
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          {/* Main image */}
-          <div className="relative aspect-[3/4] sm:aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-[3px] bg-sage-light shadow-xl shadow-lavender/10 cursor-pointer"
+          {/* Main image - natural aspect ratio with object-contain */}
+          <div className="relative overflow-hidden rounded-[3px] bg-sage-light shadow-xl shadow-lavender/10 cursor-pointer min-h-[300px] max-h-[60vh] md:max-h-[70vh]"
             onClick={() => setLightbox(photos[current].id)}
             role="button"
             aria-label="View photo in full screen"
@@ -153,18 +153,18 @@ export default function Gallery() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0"
+                className="absolute inset-0 flex items-center justify-center"
               >
                 <img
                   src={photos[current].src}
                   alt=""
-                  className="w-full h-full object-cover"
+                  className="max-w-full max-h-[60vh] md:max-h-[70vh] w-auto h-auto object-contain"
                 />
               </motion.div>
             </AnimatePresence>
 
             {/* Subtle gradient overlay for depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
 
             {/* Navigation arrows */}
             <button
@@ -259,15 +259,15 @@ export default function Gallery() {
                 exit={{ scale: 0.92, opacity: 0 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-[88vw] max-w-3xl max-h-[85vh] rounded-[4px] overflow-hidden"
+                className="w-[90vw] max-w-4xl max-h-[90vh] rounded-[4px] overflow-hidden flex items-center justify-center"
               >
                 <motion.img
                   src={photos[currentIdx]?.src}
                   alt=""
-                  className="w-full h-full object-contain"
-                  initial={{ scale: 1.1 }}
+                  className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
+                  initial={{ scale: 1.05 }}
                   animate={{ scale: 1 }}
-                  transition={{ duration: 8, ease: "linear" }}
+                  transition={{ duration: 10, ease: "linear" }}
                 />
               </motion.div>
             </AnimatePresence>
