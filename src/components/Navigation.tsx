@@ -12,6 +12,7 @@ const links = [
   { name: "Dress Code", href: "#dresscode" },
   { name: "Aso Ebi", href: "#asoebi" },
   { name: "Gift", href: "#registry" },
+  { name: "Captured Moments", href: "#gallery" },
   { name: "FAQ", href: "#faq" },
   { name: "RSVP", href: "#rsvp" },
 ];

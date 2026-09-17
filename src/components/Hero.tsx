@@ -84,7 +84,7 @@ export default function Hero() {
       </motion.svg>
 
       {/* Mobile: stacked layout — gentle parallax */}
-      <motion.div style={{ y: mobileTextY, opacity: mobileOpacity }} className="relative z-10 w-full px-5 md:hidden">
+      <motion.div style={{ y: mobileTextY, opacity: mobileOpacity }} className="relative z-10 w-full px-5 pt-16 md:hidden">
         <div className="text-center">
           <motion.p custom={0} initial="hidden" animate="visible" variants={fadeUp}
             className="text-[0.75rem] uppercase tracking-[0.35em] text-lavender font-sans mb-4">

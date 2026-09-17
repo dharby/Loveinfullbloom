@@ -453,6 +453,17 @@ export default function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
         >
           Strictly for invited guests — please do not share or forward this invitation
         </motion.p>
+
+        {/* Designed by credit */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: phase === "ready" ? 1 : 0 }}
+          transition={{ duration: 0.8, delay: 1.6 }}
+          className="mt-6 text-center text-[0.5rem] sm:text-[0.55rem] uppercase tracking-[0.2em] font-sans"
+          style={{ color: isDark ? "rgba(196,184,217,0.5)" : "rgba(45,106,79,0.4)" }}
+        >
+          Website designed by cleekrightstudios
+        </motion.p>
       </div>
     </div>
   );
