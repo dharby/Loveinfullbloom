@@ -46,6 +46,9 @@ export default function Navigation() {
   const nav = (href: string) => {
     setOpen(false);
     setTimeout(() => {
+      if (href === "#rsvp") {
+        window.location.hash = "rsvp=new";
+      }
       const el = document.querySelector(href);
       if (el) {
         const y = el.getBoundingClientRect().top + window.scrollY - 80;

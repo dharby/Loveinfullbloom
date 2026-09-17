@@ -35,7 +35,10 @@ export default function Hero() {
   const mobileTextY = useTransform(scrollYProgress, [0, 1], [0, 10]);
   const mobileOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
 
-  const scrollTo = (id: string) => {
+  const scrollTo = (id: string, newGuest = false) => {
+    if (newGuest) {
+      window.location.hash = "rsvp=new";
+    }
     const el = document.getElementById(id.replace("#", ""));
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - 80;
@@ -132,7 +135,7 @@ export default function Hero() {
             <button onClick={() => scrollTo("#details")} className="inline-flex items-center justify-center h-11 px-6 bg-mint text-cream text-[0.75rem] uppercase tracking-[0.2em] font-sans font-medium border border-lavender/30 rounded-[3px] transition-all duration-300 hover:bg-mint-dark hover:-translate-y-0.5 active:scale-[0.98]">
               Wedding Details
             </button>
-            <button onClick={() => scrollTo("#rsvp")} className="inline-flex items-center justify-center h-11 px-6 bg-transparent text-mint text-[0.75rem] uppercase tracking-[0.2em] font-sans font-medium border border-sage rounded-[3px] transition-all duration-300 hover:bg-sage-light/50 hover:-translate-y-0.5 active:scale-[0.98]">
+            <button onClick={() => scrollTo("#rsvp", true)} className="inline-flex items-center justify-center h-11 px-6 bg-transparent text-mint text-[0.75rem] uppercase tracking-[0.2em] font-sans font-medium border border-sage rounded-[3px] transition-all duration-300 hover:bg-sage-light/50 hover:-translate-y-0.5 active:scale-[0.98]">
               RSVP Now
             </button>
           </motion.div>
@@ -169,7 +172,7 @@ export default function Hero() {
             <button onClick={() => scrollTo("#details")} className="inline-flex items-center justify-center h-12 px-7 bg-mint text-cream text-[0.8rem] uppercase tracking-[0.2em] font-sans font-medium border border-lavender/30 rounded-[3px] transition-all duration-300 hover:bg-mint-dark hover:-translate-y-0.5 active:scale-[0.98]">
               Wedding Details
             </button>
-            <button onClick={() => scrollTo("#rsvp")} className="inline-flex items-center justify-center h-12 px-7 bg-transparent text-mint text-[0.8rem] uppercase tracking-[0.2em] font-sans font-medium border border-sage rounded-[3px] transition-all duration-300 hover:bg-sage-light/50 hover:-translate-y-0.5 active:scale-[0.98]">
+            <button onClick={() => scrollTo("#rsvp", true)} className="inline-flex items-center justify-center h-12 px-7 bg-transparent text-mint text-[0.8rem] uppercase tracking-[0.2em] font-sans font-medium border border-sage rounded-[3px] transition-all duration-300 hover:bg-sage-light/50 hover:-translate-y-0.5 active:scale-[0.98]">
               RSVP Now
             </button>
           </motion.div>

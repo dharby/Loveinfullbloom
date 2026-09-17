@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RSVP_CATEGORIES, rsvpCategoryLabel, isRSVPCategory, type RSVPCategory } from "@/lib/types";
 import Confetti from "@/components/Confetti";
@@ -52,6 +52,14 @@ export default function RSVP() {
   const [error, setError] = useState("");
   const [searching, setSearching] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+
+  // Check for rsvp=new hash on mount to open new guest form directly
+  useEffect(() => {
+    if (window.location.hash === "#rsvp=new") {
+      continueAsNewGuest();
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  }, []);
 
   const searchGuests = async () => {
     if (searchName.trim().length < 2) {
