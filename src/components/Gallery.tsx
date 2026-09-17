@@ -4,13 +4,13 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const photos = [
-  { id: 1, label: "Engagement", src: "/images/IMG_7872.JPG" },
-  { id: 2, label: "Portrait", src: "/images/IMG_3769.JPG" },
-  { id: 3, label: "Together", src: "/images/IMG_3773.JPG" },
-  { id: 4, label: "Pre-Wedding", src: "/images/IMG_7359.JPG" },
-  { id: 5, label: "Moments", src: "/images/IMG_7363.JPG" },
-  { id: 6, label: "Celebration", src: "/images/IMG_3764.JPG" },
-  { id: 7, label: "Our Journey", src: "/images/IMG_9398.JPG" },
+  { id: 1, src: "/images/IMG_7872.JPG" },
+  { id: 2, src: "/images/IMG_3769.JPG" },
+  { id: 3, src: "/images/IMG_3773.JPG" },
+  { id: 4, src: "/images/IMG_7359.JPG" },
+  { id: 5, src: "/images/IMG_7363.JPG" },
+  { id: 6, src: "/images/IMG_3764.JPG" },
+  { id: 7, src: "/images/IMG_9398.JPG" },
 ];
 
 const AUTO_PLAY_INTERVAL = 4000;
@@ -140,7 +140,7 @@ export default function Gallery() {
           <div className="relative aspect-[3/4] sm:aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-[3px] bg-sage-light shadow-xl shadow-lavender/10 cursor-pointer"
             onClick={() => setLightbox(photos[current].id)}
             role="button"
-            aria-label={`View ${photos[current].label} in full screen`}
+            aria-label="View photo in full screen"
             tabIndex={0}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setLightbox(photos[current].id); }}
           >
@@ -157,97 +157,62 @@ export default function Gallery() {
               >
                 <img
                   src={photos[current].src}
-                  alt={photos[current].label}
+                  alt=""
                   className="w-full h-full object-cover"
                 />
               </motion.div>
             </AnimatePresence>
 
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
+            {/* Subtle gradient overlay for depth */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
 
-            {/* Caption */}
-            <div className="absolute bottom-0 inset-x-0 p-4 sm:p-6 pointer-events-none">
-              <motion.p
-                key={`label-${current}`}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-                className="text-[0.9rem] sm:text-[1rem] font-serif text-cream mb-1"
-              >
-                {photos[current].label}
-              </motion.p>
-              <motion.p
-                key={`count-${current}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="text-[0.65rem] sm:text-[0.7rem] text-cream/50 font-sans"
-              >
-                {current + 1} / {photos.length}
-              </motion.p>
+            {/* Navigation arrows */}
+            <button
+              onClick={(e) => { e.stopPropagation(); goPrev(); }}
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-mint hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg"
+              aria-label="Previous photo"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); goNext(); }}
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-mint hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg"
+              aria-label="Next photo"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Dot indicators */}
+            <div className="flex items-center justify-center gap-2 mt-5">
+              {photos.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  className={`transition-all duration-300 rounded-full ${
+                    i === current
+                      ? "w-6 h-2 bg-mint"
+                      : "w-2 h-2 bg-lavender/30 hover:bg-lavender/50"
+                  }`}
+                  aria-label={`Go to photo ${i + 1}`}
+                />
+              ))}
             </div>
 
-            {/* Pause indicator */}
-            {paused && (
-              <div className="absolute top-4 right-4 pointer-events-none">
-                <div className="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1.5">
-                  <svg className="w-3 h-3 text-cream/70" viewBox="0 0 24 24" fill="currentColor">
-                    <rect x="6" y="4" width="4" height="16" rx="1" />
-                    <rect x="14" y="4" width="4" height="16" rx="1" />
-                  </svg>
-                  <span className="text-[0.6rem] text-cream/70 font-sans uppercase tracking-wider">Paused</span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Navigation arrows */}
-          <button
-            onClick={(e) => { e.stopPropagation(); goPrev(); }}
-            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-mint hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg"
-            aria-label="Previous photo"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); goNext(); }}
-            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-mint hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg"
-            aria-label="Next photo"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          {/* Dot indicators */}
-          <div className="flex items-center justify-center gap-2 mt-5">
-            {photos.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                className={`transition-all duration-300 rounded-full ${
-                  i === current
-                    ? "w-6 h-2 bg-mint"
-                    : "w-2 h-2 bg-lavender/30 hover:bg-lavender/50"
-                }`}
-                aria-label={`Go to photo ${i + 1}`}
+            {/* Progress bar */}
+            <div className="mt-3 h-0.5 bg-lavender/10 rounded-full overflow-hidden max-w-xs mx-auto">
+              <motion.div
+                key={`progress-${current}-${paused}`}
+                initial={{ width: "0%" }}
+                animate={{ width: paused ? undefined : "100%" }}
+                transition={{ duration: paused ? 0 : AUTO_PLAY_INTERVAL / 1000, ease: "linear" }}
+                className="h-full bg-gradient-to-r from-mint to-lavender rounded-full"
+                style={{ width: paused ? "0%" : undefined }}
               />
-            ))}
-          </div>
-
-          {/* Progress bar */}
-          <div className="mt-3 h-0.5 bg-lavender/10 rounded-full overflow-hidden max-w-xs mx-auto">
-            <motion.div
-              key={`progress-${current}-${paused}`}
-              initial={{ width: "0%" }}
-              animate={{ width: paused ? undefined : "100%" }}
-              transition={{ duration: paused ? 0 : AUTO_PLAY_INTERVAL / 1000, ease: "linear" }}
-              className="h-full bg-gradient-to-r from-mint to-lavender rounded-full"
-              style={{ width: paused ? "0%" : undefined }}
-            />
+            </div>
           </div>
         </motion.div>
       </div>
@@ -268,7 +233,7 @@ export default function Gallery() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <button onClick={() => setLightbox(null)} className="absolute top-5 right-5 text-cream/60 hover:text-cream text-2xl z-10 w-10 h-10 flex items-center justify-center" aria-label="Close lightbox">
+            <button onClick={() => setLightbox(null)} className="absolute top-5 right-5 text-cream/60 hover:text-cream z-10 w-10 h-10 flex items-center justify-center" aria-label="Close lightbox">
               <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -298,7 +263,7 @@ export default function Gallery() {
               >
                 <motion.img
                   src={photos[currentIdx]?.src}
-                  alt={photos[currentIdx]?.label}
+                  alt=""
                   className="w-full h-full object-contain"
                   initial={{ scale: 1.1 }}
                   animate={{ scale: 1 }}
@@ -307,15 +272,13 @@ export default function Gallery() {
               </motion.div>
             </AnimatePresence>
 
+            {/* Minimal counter only in lightbox */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center"
             >
-              <p className="text-[0.75rem] sm:text-[0.8rem] font-serif text-cream/70 mb-1">
-                {photos[currentIdx]?.label}
-              </p>
               <p className="text-[0.65rem] sm:text-[0.7rem] text-cream/40 font-sans">
                 {currentIdx + 1} / {photos.length}
               </p>
