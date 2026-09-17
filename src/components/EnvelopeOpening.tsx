@@ -459,10 +459,24 @@ export default function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: phase === "ready" ? 1 : 0 }}
           transition={{ duration: 0.8, delay: 1.6 }}
-          className="mt-6 text-center text-[0.5rem] sm:text-[0.55rem] uppercase tracking-[0.2em] font-sans"
-          style={{ color: isDark ? "rgba(196,184,217,0.5)" : "rgba(45,106,79,0.4)" }}
+          className="mt-6 text-center text-[0.65rem] sm:text-[0.7rem] font-sans tracking-[0.1em]"
+          style={{ color: isDark ? "rgba(196,184,217,0.85)" : "rgba(45,106,79,0.75)" }}
         >
-          Website designed by cleekrightstudios
+          <span className="font-normal text-ink-muted/70 dark:text-cream/70">Website designed by </span>
+          <a
+            href="https://www.instagram.com/cleekrightstudios?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 font-medium text-mint hover:text-lavender transition-colors"
+            aria-label="Visit CleekRight Studios on Instagram"
+          >
+            cleekrightstudios
+            <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg>
+          </a>
         </motion.p>
       </div>
     </div>
