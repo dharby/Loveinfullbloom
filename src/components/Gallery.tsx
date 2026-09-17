@@ -1,79 +1,56 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const photos = [
-  { id: 1, label: "Engagement", src: "/images/IMG_7872.JPG", aspect: "aspect-[3/4]" },
-  { id: 2, label: "Portrait", src: "/images/IMG_3769.JPG", aspect: "aspect-[3/4]" },
-  { id: 3, label: "Together", src: "/images/IMG_3773.JPG", aspect: "aspect-[4/3]" },
-  { id: 4, label: "Pre-Wedding", src: "/images/IMG_7359.JPG", aspect: "aspect-[3/4]" },
-  { id: 5, label: "Moments", src: "/images/IMG_7363.JPG", aspect: "aspect-[3/4]" },
-  { id: 6, label: "Celebration", src: "/images/IMG_3764.JPG", aspect: "aspect-[4/3]" },
-  { id: 7, label: "Our Journey", src: "/images/IMG_9398.JPG", aspect: "aspect-[3/4]" },
+  { id: 1, label: "Engagement", src: "/images/IMG_7872.JPG" },
+  { id: 2, label: "Portrait", src: "/images/IMG_3769.JPG" },
+  { id: 3, label: "Together", src: "/images/IMG_3773.JPG" },
+  { id: 4, label: "Pre-Wedding", src: "/images/IMG_7359.JPG" },
+  { id: 5, label: "Moments", src: "/images/IMG_7363.JPG" },
+  { id: 6, label: "Celebration", src: "/images/IMG_3764.JPG" },
+  { id: 7, label: "Our Journey", src: "/images/IMG_9398.JPG" },
 ];
 
-function TiltCard({ photo, onClick, index }: { photo: typeof photos[0]; onClick: () => void; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-100, 100], [8, -8]);
-  const rotateY = useTransform(x, [-100, 100], [-8, 8]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    x.set(e.clientX - centerX);
-    y.set(e.clientY - centerY);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.06, duration: 0.6 }}
-      style={{ rotateX, rotateY, transformPerspective: 800 }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onClick={onClick}
-      className={`${photo.aspect} relative overflow-hidden rounded-[2px] bg-sage-light cursor-pointer group break-inside-avoid`}
-      role="button"
-      aria-label={`View ${photo.label} photo`}
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onClick(); }}
-    >
-      <img
-        src={photo.src}
-        alt={photo.label}
-        loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute bottom-0 inset-x-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-        <span className="text-[0.7rem] sm:text-[0.75rem] font-sans uppercase tracking-wider text-cream/90 drop-shadow-lg">
-          {photo.label}
-        </span>
-      </div>
-    </motion.div>
-  );
-}
+const AUTO_PLAY_INTERVAL = 4000;
 
 export default function Gallery() {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [direction, setDirection] = useState(1);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const currentIdx = lightbox !== null ? photos.findIndex((p) => p.id === lightbox) : -1;
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
-  const navigate = useCallback((dir: "prev" | "next") => {
+  // Auto-play
+  useEffect(() => {
+    if (paused || lightbox !== null) return;
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrent((prev) => (prev + 1) % photos.length);
+    }, AUTO_PLAY_INTERVAL);
+    return () => clearInterval(timer);
+  }, [paused, lightbox]);
+
+  const goTo = useCallback((index: number) => {
+    setDirection(index > current ? 1 : -1);
+    setCurrent(index);
+  }, [current]);
+
+  const goPrev = useCallback(() => {
+    setDirection(-1);
+    setCurrent((prev) => (prev - 1 + photos.length) % photos.length);
+  }, []);
+
+  const goNext = useCallback(() => {
+    setDirection(1);
+    setCurrent((prev) => (prev + 1) % photos.length);
+  }, []);
+
+  // Lightbox navigation
+  const navigateLightbox = useCallback((dir: "prev" | "next") => {
     if (currentIdx === -1) return;
     const next = dir === "next"
       ? (currentIdx + 1) % photos.length
@@ -92,13 +69,43 @@ export default function Gallery() {
   const handleTouchEnd = () => {
     const diff = touchStartX.current - touchEndX.current;
     if (Math.abs(diff) > 50) {
-      navigate(diff > 0 ? "next" : "prev");
+      navigateLightbox(diff > 0 ? "next" : "prev");
     }
+  };
+
+  // Keyboard support for lightbox
+  useEffect(() => {
+    if (lightbox === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowLeft") navigateLightbox("prev");
+      if (e.key === "ArrowRight") navigateLightbox("next");
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightbox, navigateLightbox]);
+
+  const slideVariants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? "100%" : "-100%",
+      opacity: 0,
+      scale: 1.05,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+    },
+    exit: (dir: number) => ({
+      x: dir > 0 ? "-100%" : "100%",
+      opacity: 0,
+      scale: 0.95,
+    }),
   };
 
   return (
     <section id="gallery" className="py-14 md:py-20 bg-cream">
-      <div className="max-w-5xl mx-auto px-5">
+      <div className="max-w-4xl mx-auto px-5">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -119,18 +126,133 @@ export default function Gallery() {
           </div>
         </motion.div>
 
-        <div className="columns-2 md:columns-3 gap-3 space-y-3">
-          {photos.map((photo, i) => (
-            <TiltCard
-              key={photo.id}
-              photo={photo}
-              index={i}
-              onClick={() => setLightbox(photo.id)}
+        {/* Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          {/* Main image */}
+          <div className="relative aspect-[3/4] sm:aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-[3px] bg-sage-light shadow-xl shadow-lavender/10 cursor-pointer"
+            onClick={() => setLightbox(photos[current].id)}
+            role="button"
+            aria-label={`View ${photos[current].label} in full screen`}
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setLightbox(photos[current].id); }}
+          >
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={current}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0"
+              >
+                <img
+                  src={photos[current].src}
+                  alt={photos[current].label}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
+
+            {/* Caption */}
+            <div className="absolute bottom-0 inset-x-0 p-4 sm:p-6 pointer-events-none">
+              <motion.p
+                key={`label-${current}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className="text-[0.9rem] sm:text-[1rem] font-serif text-cream mb-1"
+              >
+                {photos[current].label}
+              </motion.p>
+              <motion.p
+                key={`count-${current}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+                className="text-[0.65rem] sm:text-[0.7rem] text-cream/50 font-sans"
+              >
+                {current + 1} / {photos.length}
+              </motion.p>
+            </div>
+
+            {/* Pause indicator */}
+            {paused && (
+              <div className="absolute top-4 right-4 pointer-events-none">
+                <div className="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1.5">
+                  <svg className="w-3 h-3 text-cream/70" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" rx="1" />
+                    <rect x="14" y="4" width="4" height="16" rx="1" />
+                  </svg>
+                  <span className="text-[0.6rem] text-cream/70 font-sans uppercase tracking-wider">Paused</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Navigation arrows */}
+          <button
+            onClick={(e) => { e.stopPropagation(); goPrev(); }}
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-mint hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg"
+            aria-label="Previous photo"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); goNext(); }}
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-mint hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg"
+            aria-label="Next photo"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          {/* Dot indicators */}
+          <div className="flex items-center justify-center gap-2 mt-5">
+            {photos.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className={`transition-all duration-300 rounded-full ${
+                  i === current
+                    ? "w-6 h-2 bg-mint"
+                    : "w-2 h-2 bg-lavender/30 hover:bg-lavender/50"
+                }`}
+                aria-label={`Go to photo ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Progress bar */}
+          <div className="mt-3 h-0.5 bg-lavender/10 rounded-full overflow-hidden max-w-xs mx-auto">
+            <motion.div
+              key={`progress-${current}-${paused}`}
+              initial={{ width: "0%" }}
+              animate={{ width: paused ? undefined : "100%" }}
+              transition={{ duration: paused ? 0 : AUTO_PLAY_INTERVAL / 1000, ease: "linear" }}
+              className="h-full bg-gradient-to-r from-mint to-lavender rounded-full"
+              style={{ width: paused ? "0%" : undefined }}
             />
-          ))}
-        </div>
+          </div>
+        </motion.div>
       </div>
 
+      {/* Lightbox */}
       <AnimatePresence>
         {lightbox !== null && (
           <motion.div
@@ -147,15 +269,21 @@ export default function Gallery() {
             onTouchEnd={handleTouchEnd}
           >
             <button onClick={() => setLightbox(null)} className="absolute top-5 right-5 text-cream/60 hover:text-cream text-2xl z-10 w-10 h-10 flex items-center justify-center" aria-label="Close lightbox">
-              ×
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
 
-            <button onClick={(e) => { e.stopPropagation(); navigate("prev"); }} className="absolute left-3 sm:left-6 text-cream/50 hover:text-cream text-3xl z-10 w-10 h-10 flex items-center justify-center" aria-label="Previous photo">
-              ‹
+            <button onClick={(e) => { e.stopPropagation(); navigateLightbox("prev"); }} className="absolute left-3 sm:left-6 text-cream/50 hover:text-cream z-10 w-10 h-10 flex items-center justify-center" aria-label="Previous photo">
+              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
 
-            <button onClick={(e) => { e.stopPropagation(); navigate("next"); }} className="absolute right-3 sm:right-6 text-cream/50 hover:text-cream text-3xl z-10 w-10 h-10 flex items-center justify-center" aria-label="Next photo">
-              ›
+            <button onClick={(e) => { e.stopPropagation(); navigateLightbox("next"); }} className="absolute right-3 sm:right-6 text-cream/50 hover:text-cream z-10 w-10 h-10 flex items-center justify-center" aria-label="Next photo">
+              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 5l7 7-7 7" />
+              </svg>
             </button>
 
             <AnimatePresence mode="wait">
@@ -168,7 +296,6 @@ export default function Gallery() {
                 onClick={(e) => e.stopPropagation()}
                 className="w-[88vw] max-w-3xl max-h-[85vh] rounded-[4px] overflow-hidden"
               >
-                {/* Ken Burns effect */}
                 <motion.img
                   src={photos[currentIdx]?.src}
                   alt={photos[currentIdx]?.label}
@@ -180,7 +307,6 @@ export default function Gallery() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Caption */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
